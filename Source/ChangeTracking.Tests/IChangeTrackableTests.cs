@@ -83,6 +83,17 @@ namespace ChangeTracking.Tests
         }
 
         [TestMethod]
+        public void GetOriginalValue_OnNoSetterProperty_Should_Return_Original_Value()
+        {
+            var order = Helper.GetOrder();
+            var trackable = order.AsTrackable();
+
+            trackable.OrderDetails.Add(new OrderDetail());
+
+            trackable.CastToIChangeTrackable().GetOriginalValue(o => o.OrderDetailsCount).Should().Be(2);
+        }
+
+        [TestMethod]
         public void GetOriginalValue_Generic_By_Property_Name_Should_Return_Original_Value()
         {
             var order = Helper.GetOrder();
